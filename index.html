@@ -1,73 +1,56 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي الشخصي</title>
+    <title>موقعي الاحترافي</title>
     <style>
-        body { background: #1a1a2e; color: white; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
-        /* تنسيق الصورة الشخصية لتكون بيضاوية كما في طلبك */
-        .profile-img { width: 140px; height: 180px; border-radius: 50% / 40%; border: 3px solid orange; object-fit: cover; margin-top: 20px; box-shadow: 0 0 15px rgba(255, 152, 0, 0.4); }
-        h1 { margin-top: 15px; font-size: 22px; }
-        .btn-orange { padding: 10px 15px; background: orange; border: none; border-radius: 5px; cursor: pointer; color: black; font-weight: bold; }
-        .input-main { padding: 10px; border-radius: 5px; border: none; width: 60%; margin-bottom: 10px; }
-        
-        .notepad { background: rgba(255, 255, 255, 0.05); max-width: 350px; margin: 30px auto; padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .task-list { list-style: none; padding: 0; margin-top: 20px; }
-        .task-item { background: rgba(255, 255, 255, 0.1); padding: 10px; margin-bottom: 8px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; border-right: 4px solid orange; }
-        .delete-btn { color: #ff4d4d; cursor: pointer; font-size: 18px; margin-left: 10px; }
+        body { background: #1a1a2e; color: white; text-align: center; font-family: sans-serif; padding: 20px; }
+        /* تصميم الصورة الشخصية */
+        .profile-img { width: 140px; height: 180px; border-radius: 50% / 40%; border: 3px solid orange; object-fit: cover; margin-top: 20px; }
+        .notepad { background: rgba(255, 255, 255, 0.05); max-width: 350px; margin: 20px auto; padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .task-item { background: rgba(255, 255, 255, 0.1); padding: 10px; margin-top: 10px; border-radius: 5px; display: flex; justify-content: space-between; border-right: 4px solid orange; }
+        input { padding: 10px; border-radius: 5px; border: none; width: 60%; }
+        button { padding: 10px; background: orange; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
-
-    <img src="https://avatars.githubusercontent.com/u/198114660?v=4" alt="Profile" class="profile-img">
-
+    <img src="me.jpg" onerror="this.src='https://github.com/skipakink-sudo.png'" class="profile-img">
+    
     <h1>مرحباً بك في موقعي 🚀</h1>
 
     <div class="notepad">
-        <h3>📝 مفكرتي الدائمة</h3>
-        <input type="text" id="taskInput" placeholder="اكتب شيئاً لحفظه..." class="input-main">
-        <button class="btn-orange" onclick="addTask()">إضافة وحفظ</button>
-        <div id="taskList" class="task-list"></div>
+        <h3>📝 مفكرتي الدائمة (لا تحذف)</h3>
+        <input type="text" id="taskInput" placeholder="اكتب شيئاً هنا...">
+        <button onclick="addTask()">إضافة وحفظ</button>
+        <div id="taskList"></div>
     </div>
 
     <script>
-        // تحميل البيانات المحفوظة فور فتح الصفحة
-        window.onload = function() {
-            const savedData = JSON.parse(localStorage.getItem('permanentTasks')) || [];
-            savedData.forEach(text => createNoteElement(text));
-        };
-
+        // كود الحفظ الدائم في Chrome
         function addTask() {
             const input = document.getElementById('taskInput');
-            if (input.value.trim() === '') return;
-            
-            createNoteElement(input.value);
-            saveToStorage(input.value);
-            input.value = '';
+            if (input.value.trim() === "") return;
+            const tasks = JSON.parse(localStorage.getItem('permanent_notes') || '[]');
+            tasks.push(input.value);
+            localStorage.setItem('permanent_notes', JSON.stringify(tasks));
+            display();
+            input.value = "";
         }
-
-        function createNoteElement(text) {
-            const div = document.createElement('div');
-            div.className = 'task-item';
-            div.innerHTML = `<span class="delete-btn" onclick="deleteNote(this)">❌</span> <span>${text}</span>`;
-            document.getElementById('taskList').appendChild(div);
+        function display() {
+            const tasks = JSON.parse(localStorage.getItem('permanent_notes') || '[]');
+            document.getElementById('taskList').innerHTML = tasks.map((t, i) => 
+                `<div class="task-item"><span>${t}</span><span style="cursor:pointer" onclick="del(${i})">❌</span></div>`
+            ).join('');
         }
-
-        function saveToStorage(text) {
-            let tasks = JSON.parse(localStorage.getItem('permanentTasks')) || [];
-            tasks.push(text);
-            localStorage.setItem('permanentTasks', JSON.stringify(tasks));
+        function del(i) {
+            const tasks = JSON.parse(localStorage.getItem('permanent_notes'));
+            tasks.splice(i, 1);
+            localStorage.setItem('permanent_notes', JSON.stringify(tasks));
+            display();
         }
-
-        function deleteNote(btn) {
-            const textToRemove = btn.nextElementSibling.innerText;
-            btn.parentElement.remove();
-            let tasks = JSON.parse(localStorage.getItem('permanentTasks'));
-            tasks = tasks.filter(t => t !== textToRemove);
-            localStorage.setItem('permanentTasks', JSON.stringify(tasks));
-        }
+        window.onload = display;
     </script>
 </body>
 </html>
-
