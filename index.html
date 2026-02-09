@@ -2,58 +2,100 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>موقعي الأول</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقعي الشخصي</title>
     <style>
-        body { background: #1a1a2e; color: white; text-align: center; font-family: sans-serif; }
-        img { width: 150px; border-radius: 50%; border: 3px solid orange; }
-        input { padding: 10px; border-radius: 5px; margin: 10px; border: none; }
-        button { padding: 10px 20px; background: orange; border: none; border-radius: 5px; cursor: pointer; color: white; font-weight: bold; }
-        
-        a {
-            color: #00d2ff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
+        body {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
         }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid orange;
+            object-fit: cover;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+        }
+        h1 { margin-top: 15px; font-size: 24px; }
         .container {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
-            padding: 20px;
+            margin-top: 25px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 20px;
             width: 140px;
-            transition: 0.4s;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .card:hover {
             transform: translateY(-10px);
-            border-color: #ff9800;
-            box-shadow: 0 10px 25px rgba(255, 152, 0, 0.4);
-            background: rgba(255, 255, 255, 0.1);
-            cursor: pointer;
+            background: rgba(255, 152, 0, 0.2);
+            border-color: orange;
         }
-        .card h3 {
-            color: orange;
-            margin-bottom: 5px;
-            font-size: 16px;
+        .card h3 { color: orange; margin: 0 0 10px 0; }
+        .card p { font-size: 12px; margin: 0; opacity: 0.8; }
+        
+        /* قسم المفكرة */
+        .notepad {
+            background: rgba(255, 255, 255, 0.05);
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 70%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background: orange;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <h1>مرحباً بك في موقعي الجديد!</h1>
-    
+    <img src="https://github.com/skipakink-sudo.png" alt="صورتي" class="profile-img">
+
+    <h1>مرحباً بك في موقعي 🚀</h1>
+
     <div class="container">
-        <div class="card">
-            <h3>مشروعي الأول</h3>
-            <p>وصف قصير هنا</p>
-        </div>
+        <a href="رابط_حسابك_هنا" class="card">
+            <h3>Facebook 👥</h3>
+            <p>تابعني على فيسبوك</p>
+        </a>
+
+        <a href="رابط_تلجرام_هنا" class="card">
+            <h3>Telegram 📱</h3>
+            <p>تواصل معي عبر تلجرام</p>
+        </a>
+    </div>
+
+    <div class="notepad">
+        <h3>📝 مفكرتي اليومية</h3>
+        <input type="text" placeholder="اكتب مهمة جديدة...">
+        <button>إضافة</button>
     </div>
 
 </body>
