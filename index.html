@@ -6,20 +6,21 @@
     <title>موقعي الشخصي</title>
     <style>
         body { background: #1a1a2e; color: white; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
-        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid orange; object-fit: cover; margin-top: 20px; box-shadow: 0 0 15px rgba(255, 152, 0, 0.4); }
+        /* تنسيق الصورة الشخصية لتكون بيضاوية كما في طلبك */
+        .profile-img { width: 140px; height: 180px; border-radius: 50% / 40%; border: 3px solid orange; object-fit: cover; margin-top: 20px; box-shadow: 0 0 15px rgba(255, 152, 0, 0.4); }
         h1 { margin-top: 15px; font-size: 22px; }
         .btn-orange { padding: 10px 15px; background: orange; border: none; border-radius: 5px; cursor: pointer; color: black; font-weight: bold; }
         .input-main { padding: 10px; border-radius: 5px; border: none; width: 60%; margin-bottom: 10px; }
         
         .notepad { background: rgba(255, 255, 255, 0.05); max-width: 350px; margin: 30px auto; padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .task-list { list-style: none; padding: 0; margin-top: 20px; text-align: right; }
-        .task-item { background: rgba(255, 255, 255, 0.1); padding: 10px; margin-bottom: 5px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .delete-btn { color: #ff4d4d; cursor: pointer; font-weight: bold; padding: 0 10px; }
+        .task-list { list-style: none; padding: 0; margin-top: 20px; }
+        .task-item { background: rgba(255, 255, 255, 0.1); padding: 10px; margin-bottom: 8px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; border-right: 4px solid orange; }
+        .delete-btn { color: #ff4d4d; cursor: pointer; font-size: 18px; margin-left: 10px; }
     </style>
 </head>
 <body>
 
-    <img src="https://github.com/skipakink-sudo.png" alt="Profile" class="profile-img">
+    <img src="https://avatars.githubusercontent.com/u/198114660?v=4" alt="Profile" class="profile-img">
 
     <h1>مرحباً بك في موقعي 🚀</h1>
 
@@ -27,46 +28,46 @@
         <h3>📝 مفكرتي الدائمة</h3>
         <input type="text" id="taskInput" placeholder="اكتب شيئاً لحفظه..." class="input-main">
         <button class="btn-orange" onclick="addTask()">إضافة وحفظ</button>
-        <ul id="taskList" class="task-list"></ul>
+        <div id="taskList" class="task-list"></div>
     </div>
 
     <script>
-        // دالة لتحميل المهام المحفوظة عند فتح الموقع
+        // تحميل البيانات المحفوظة فور فتح الصفحة
         window.onload = function() {
-            const savedTasks = JSON.parse(localStorage.getItem('myTasks')) || [];
-            savedTasks.forEach(task => displayTask(task));
+            const savedData = JSON.parse(localStorage.getItem('permanentTasks')) || [];
+            savedData.forEach(text => createNoteElement(text));
         };
 
         function addTask() {
             const input = document.getElementById('taskInput');
-            const taskValue = input.value;
-            if (taskValue === '') return;
-
-            displayTask(taskValue);
-            saveTask(taskValue);
+            if (input.value.trim() === '') return;
+            
+            createNoteElement(input.value);
+            saveToStorage(input.value);
             input.value = '';
         }
 
-        function displayTask(taskValue) {
-            const li = document.createElement('li');
-            li.className = 'task-item';
-            li.innerHTML = `<span>${taskValue}</span> <span class="delete-btn" onclick="removeTask(this)">❌</span>`;
-            document.getElementById('taskList').appendChild(li);
+        function createNoteElement(text) {
+            const div = document.createElement('div');
+            div.className = 'task-item';
+            div.innerHTML = `<span class="delete-btn" onclick="deleteNote(this)">❌</span> <span>${text}</span>`;
+            document.getElementById('taskList').appendChild(div);
         }
 
-        function saveTask(task) {
-            let tasks = JSON.parse(localStorage.getItem('myTasks')) || [];
-            tasks.push(task);
-            localStorage.setItem('myTasks', JSON.stringify(tasks));
+        function saveToStorage(text) {
+            let tasks = JSON.parse(localStorage.getItem('permanentTasks')) || [];
+            tasks.push(text);
+            localStorage.setItem('permanentTasks', JSON.stringify(tasks));
         }
 
-        function removeTask(element) {
-            const taskValue = element.parentElement.firstChild.innerText;
-            element.parentElement.remove();
-            let tasks = JSON.parse(localStorage.getItem('myTasks'));
-            tasks = tasks.filter(t => t !== taskValue);
-            localStorage.setItem('myTasks', JSON.stringify(tasks));
+        function deleteNote(btn) {
+            const textToRemove = btn.nextElementSibling.innerText;
+            btn.parentElement.remove();
+            let tasks = JSON.parse(localStorage.getItem('permanentTasks'));
+            tasks = tasks.filter(t => t !== textToRemove);
+            localStorage.setItem('permanentTasks', JSON.stringify(tasks));
         }
     </script>
 </body>
 </html>
+
