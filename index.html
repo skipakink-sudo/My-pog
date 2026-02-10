@@ -57,7 +57,21 @@
     <button onclick="completeMission()" id="missionBtn" style="background: #1a1a2e; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer;">تم الإنجاز! ✅</button>
     <div id="badges" style="margin-top: 10px; font-size: 20px;"></div>
     </div>
-    
+    function redeemReward(cost, rewardName) {
+    let badges = parseInt(localStorage.getItem('badgeCount')) || 0;
+
+    if (badges >= cost) {
+        badges -= cost; // خصم الأوسمة
+        localStorage.setItem('badgeCount', badges);
+        updateBadges(); // تحديث الشكل في الموقع
+        
+        alert("مبروك يا شكران! لقد استحقيت: " + rewardName + " بجدارة. استمتع! 🎉");
+    } else {
+        let missing = cost - badges;
+        alert("للأسف يا بطل، تحتاج إلى " + missing + " أوسمة إضافية لتفتح هذه المكافأة. استمر في العمل! 💪");
+    }
+}
+
 <script>
 function addTask() {
     const input = document.getElementById('taskInput');
@@ -225,8 +239,24 @@ function updateBadges() {
     const count = parseInt(localStorage.getItem('badgeCount') || '0');
     badgesDiv.innerHTML = "أوسمتك: " + "⭐".repeat(count);
 }
+window.onload = function() {
+    loadMission(); // هذا السطر هو الذي سيقوم بتشغيل التحدي فور فتح الصفحة
+};
 
-// لا تنسى إضافة loadMission() داخل window.onload
+    function redeemReward(cost, rewardName) {
+    let badges = parseInt(localStorage.getItem('badgeCount')) || 0;
+
+    if (badges >= cost) {
+        badges -= cost; // خصم الأوسمة
+        localStorage.setItem('badgeCount', badges);
+        updateBadges(); // تحديث الشكل في الموقع
+        
+        alert("مبروك يا شكران! لقد استحقيت: " + rewardName + " بجدارة. استمتع! 🎉");
+    } else {
+        let missing = cost - badges;
+        alert("للأسف يا بطل، تحتاج إلى " + missing + " أوسمة إضافية لتفتح هذه المكافأة. استمر في العمل! 💪");
+    }
+    }
     
     
     
