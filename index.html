@@ -362,11 +362,11 @@ window.addEventListener('load', function() {
         alert("يا علاء، يرجى وضع رابط يوتيوب صحيح.");
     }
     }
-    // قائمة بروابط فيديوهات شورتس أو ريلز تعليمية (يمكنك تغيير الروابط هنا)
+    // قائمة الريلز المحدثة يا علاء
 const myReels = [
-    "https://www.youtube.com/embed/5PSL937S4Ic", // فيديو برمجة قصير
-    "https://www.youtube.com/embed/7X8uG6A2H_o", // فيديو تحفيزي
-    "https://www.youtube.com/embed/jNQXAC9IVRw"  // فيديو تقني
+    "https://www.instagram.com/reels/C42_X_xsyvW/embed", // مثال لريلز إنستغرام
+    "https://www.instagram.com/reels/C3m_y_wsyvE/embed", // مثال آخر
+    "https://www.youtube.com/embed/jNQXAC9IVRw"          // يوتيوب شورتس (أضمن للعمل)
 ];
 
 let currentReelIndex = 0;
@@ -374,12 +374,13 @@ let currentReelIndex = 0;
 function nextReel() {
     currentReelIndex++;
     if (currentReelIndex >= myReels.length) {
-        currentReelIndex = 0; // العودة لأول فيديو
+        currentReelIndex = 0;
     }
+    // تحديث المشغل بالرابط الجديد
     document.getElementById('reels-player').src = myReels[currentReelIndex];
-}
-    
-    
-</script>
+    }
+
+
+    </script>
 </body>
 </html>
