@@ -1,6 +1,4 @@
-
-<!DOCTYPE html>
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -19,6 +17,8 @@
 </head>
 <body>
     <img src="me.jpg" onerror="this.src='https://github.com/skipakink-sudo.png'" class="profile-img">
+    <h2 style="color: #ffb703; margin-bottom: 20px;">AS.skipa</h2>
+    
     <h1>مرحباً بك في موقعي 🚀</h1>
 
     <div class="notepad">
@@ -26,6 +26,12 @@
         <p id="taskCount" style="color: #ccc; font-size: 14px;">لديك 0 مهام حالياً</p>
         
         <input type="text" id="taskInput" placeholder="اكتب شيئاً هنا...">
+        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+    <a href="https://www.google.com" target="_blank" style="text-decoration: none; background: #4285F4; color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">Google</a>
+    <a href="https://github.com" target="_blank" style="text-decoration: none; background: #333; color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">GitHub</a>
+    <a href="https://www.youtube.com" target="_blank" style="text-decoration: none; background: #FF0000; color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">YouTube</a>
+</div>
+
         <button onclick="addTask()">إضافة وحفظ</button>
         <div id="taskList"></div>
     </div>
@@ -81,3 +87,7 @@ window.onload = function() {
     setInterval(updateClock, 1000);
     updateClock();
 };
+const hour = new Date().getHours();
+const welcomeMsg = hour < 12 ? "صباح الخير يا علاء ☀️" : "طاب يومك يا SKIPA 🚀";
+document.querySelector('h1').textContent = welcomeMsg;
+        
