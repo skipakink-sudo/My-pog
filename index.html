@@ -41,11 +41,17 @@
     <p>🚀 وضع المذاكرة والتركيز</p>
     <button onclick="toggleFocus()" id="focusBtn" style="background: #2a9d8f; margin-bottom: 10px;">تشغيل وضع الهدوء 🌿</button>
     <div id="musicPlayer" style="display: none; margin-top: 15px;">
-        <iframe id="ytPlayer" width="0" height="0" src="https://www.youtube.com/embed/jfKfPfyJRdk?enablejsapi=1" frameborder="0"></iframe>
+        <iframe id="ytPlayer" width="0" height="0" src="https://www.youtube.com/embed/jfKfPfyJRdk?enablejsapi=1&autoplay=1&mute=0" frameborder="0" allow="autoplay"></iframe>
+
         <p style="font-size: 12px; color: #aaa;">صوت المطر يعمل الآن.. ركز يا بطل!</p>
     </div>
 </div>
-
+<div style="margin-top: 40px; padding: 20px; border: 2px solid #ffb703; border-radius: 20px; background: rgba(0,0,0,0.3);">
+    <h3>🎡 عجلة الحظ: ماذا سأفعل الآن؟</h3>
+    <div id="wheelResult" style="font-size: 24px; color: #ffb703; height: 40px; margin-bottom: 15px;">؟ ؟ ؟</div>
+    <button onclick="spinWheel()" style="background: #fb8500; border-radius: 50px; padding: 15px 30px;">لف العجلة 🚀</button>
+</div>
+    
 <script>
 function addTask() {
     const input = document.getElementById('taskInput');
@@ -144,6 +150,31 @@ function toggleFocus() {
         yt.src = yt.src.replace("&autoplay=1", "");
     }
                              }
+    function spinWheel() {
+    const options = [
+        "تعلم كود جديد 💻", 
+        "استراحة قهوة ☕", 
+        "لعب مباراة سريعة 🎮", 
+        "مراجعة المهام 📝", 
+        "قراءة صفحة من كتاب 📖",
+        "تطوير موقع My-pog 🚀"
+    ];
+    
+    const resultDisplay = document.getElementById('wheelResult');
+    resultDisplay.textContent = "جاري اللف... 🔄";
+    
+    // تأثير حركي بسيط لمدة ثانية
+    setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * options.length);
+        resultDisplay.textContent = options[randomIndex];
+        
+        // إضافة صوت تشجيع بسيط (تنبيه)
+        if (resultDisplay.textContent !== "") {
+           console.log("القرار هو: " + options[randomIndex]);
+        }
+    }, 1000);
+}
+    
     
 </script>
 </body>
