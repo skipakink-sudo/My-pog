@@ -1,56 +1,83 @@
 
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>موقعي الاحترافي</title>
     <style>
-        body { background: #1a1a2e; color: white; text-align: center; font-family: sans-serif; padding: 20px; }
-        /* تصميم الصورة الشخصية */
-        .profile-img { width: 140px; height: 180px; border-radius: 50% / 40%; border: 3px solid orange; object-fit: cover; margin-top: 20px; }
-        .notepad { background: rgba(255, 255, 255, 0.05); max-width: 350px; margin: 20px auto; padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .task-item { background: rgba(255, 255, 255, 0.1); padding: 10px; margin-top: 10px; border-radius: 5px; display: flex; justify-content: space-between; border-right: 4px solid orange; }
+        body { background: #1a1a2e; color: white; font-family: sans-serif; text-align: center; }
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 3px solid #ffb703; margin-top: 20px; object-fit: cover; }
+        .notepad { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; margin: 20px auto; }
+        #clock { color: #ffb703; font-size: 24px; font-weight: bold; margin-top: 20px; }
         input { padding: 10px; border-radius: 5px; border: none; width: 60%; }
         button { padding: 10px; background: orange; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .task-item { background: rgba(255, 255, 255, 0.2); margin: 10px 0; padding: 10px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
     </style>
+    
 </head>
 <body>
     <img src="me.jpg" onerror="this.src='https://github.com/skipakink-sudo.png'" class="profile-img">
-
     <h1>مرحباً بك في موقعي 🚀</h1>
 
     <div class="notepad">
-        <h3>📝 مفكرتي الدائمة (لا تحذف)</h3>
+        <h3>📝 مفكرتي الدائمة (لا تُحذف)</h3>
+        <p id="taskCount" style="color: #ccc; font-size: 14px;">لديك 0 مهام حالياً</p>
+        
         <input type="text" id="taskInput" placeholder="اكتب شيئاً هنا...">
         <button onclick="addTask()">إضافة وحفظ</button>
         <div id="taskList"></div>
     </div>
 
+    <div id="clock">00:00:00</div>
+
     <script>
-        // كود الحفظ الدائم في Chrome
-        function addTask() {
-            const input = document.getElementById('taskInput');
-            if (input.value.trim() === "") return;
-            const tasks = JSON.parse(localStorage.getItem('permanent_notes') || '[]');
-            tasks.push(input.value);
-            localStorage.setItem('permanent_notes', JSON.stringify(tasks));
-            display();
-            input.value = "";
-        }
-        function display() {
-            const tasks = JSON.parse(localStorage.getItem('permanent_notes') || '[]');
-            document.getElementById('taskList').innerHTML = tasks.map((t, i) => 
-                `<div class="task-item"><span>${t}</span><span style="cursor:pointer" onclick="del(${i})">❌</span></div>`
-            ).join('');
-        }
-        function del(i) {
-            const tasks = JSON.parse(localStorage.getItem('permanent_notes'));
-            tasks.splice(i, 1);
-            localStorage.setItem('permanent_notes', JSON.stringify(tasks));
-            display();
-        }
-        window.onload = display;
-    </script>
-</body>
-</html>
+function addTask() {
+    const input = document.getElementById('taskInput');
+    if (input.value.trim() === "") return;
+    const tasks = JSON.parse(localStorage.getItem('permanent_notes') || '[]');
+    tasks.push(input.value);
+    localStorage.setItem('permanent_notes', JSON.stringify(tasks));
+    display();
+    input.value = "";
+}
+
+function display() {
+    const tasks = JSON.parse(localStorage.getItem('permanent_notes') || '[]');
+    const taskList = document.getElementById('taskList');
+    const countLabel = document.getElementById('taskCount');
+    
+    // عرض المهام
+    taskList.innerHTML = tasks.map((task, i) => 
+        `<div class="task-item">
+            <span>${task}</span>
+            <button onclick="del(${i})" style="background:red; color:white; border:none; border-radius:5px; cursor:pointer;">X</button>
+        </div>`
+    ).join('');
+
+    // تحديث العداد
+    countLabel.textContent = `لديك ${tasks.length} مهام حالياً`;
+}
+
+function del(i) {
+    const tasks = JSON.parse(localStorage.getItem('permanent_notes') || '[]');
+    tasks.splice(i, 1);
+    localStorage.setItem('permanent_notes', JSON.stringify(tasks));
+    display();
+}
+
+// كود الساعة الرقمية
+function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+window.onload = function() {
+    display();
+    setInterval(updateClock, 1000);
+    updateClock();
+};
