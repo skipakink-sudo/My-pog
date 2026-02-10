@@ -51,6 +51,12 @@
     <div id="wheelResult" style="font-size: 24px; color: #ffb703; height: 40px; margin-bottom: 15px;">؟ ؟ ؟</div>
     <button onclick="spinWheel()" style="background: #fb8500; border-radius: 50px; padding: 15px 30px;">لف العجلة 🚀</button>
 </div>
+    <div id="dailyMission" style="margin: 20px auto; padding: 20px; background: linear-gradient(45deg, #ffb703, #fb8500); border-radius: 15px; color: #1a1a2e; max-width: 400px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
+    <h3 style="margin: 0;">🏆 تحدي اليوم لـ SKIPA</h3>
+    <p id="missionText" style="font-weight: bold; font-size: 1.1rem;">جاري تحميل التحدي...</p>
+    <button onclick="completeMission()" id="missionBtn" style="background: #1a1a2e; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer;">تم الإنجاز! ✅</button>
+    <div id="badges" style="margin-top: 10px; font-size: 20px;"></div>
+    </div>
     
 <script>
 function addTask() {
@@ -174,6 +180,54 @@ function toggleFocus() {
         }
     }, 1000);
 }
+    const missions = [
+    "تعلم وسوم HTML جديدة 💻",
+    "اشرب 3 لتر ماء اليوم 💧",
+    "تمرن لمدة 15 دقيقة 🏃‍♂️",
+    "رتب ملفاتك في GitHub 📁",
+    "اقرأ عن تقنية الذكاء الاصطناعي 🤖",
+    "ساعد شخصاً في تعلم البرمجة 🤝"
+];
+
+function loadMission() {
+    const missionText = document.getElementById('missionText');
+    const today = new Date().toDateString();
+    const savedDate = localStorage.getItem('missionDate');
+    
+    // إذا كان يوماً جديداً، اختر تحدياً جديداً
+    if (savedDate !== today) {
+        const randomMission = missions[Math.floor(Math.random() * missions.length)];
+        localStorage.setItem('currentMission', randomMission);
+        localStorage.setItem('missionDate', today);
+        localStorage.setItem('missionStatus', 'pending');
+    }
+    
+    missionText.textContent = localStorage.getItem('currentMission');
+    updateBadges();
+}
+
+function completeMission() {
+    if (localStorage.getItem('missionStatus') === 'completed') {
+        alert("لقد أنجزت تحدي اليوم بالفعل! انتظر تحدي الغد 😉");
+        return;
+    }
+    
+    localStorage.setItem('missionStatus', 'completed');
+    let badges = parseInt(localStorage.getItem('badgeCount') || '0');
+    localStorage.setItem('badgeCount', badges + 1);
+    
+    alert("كفو يا بطل! حصلت على وسام جديد 🏅");
+    updateBadges();
+}
+
+function updateBadges() {
+    const badgesDiv = document.getElementById('badges');
+    const count = parseInt(localStorage.getItem('badgeCount') || '0');
+    badgesDiv.innerHTML = "أوسمتك: " + "⭐".repeat(count);
+}
+
+// لا تنسى إضافة loadMission() داخل window.onload
+    
     
     
 </script>
