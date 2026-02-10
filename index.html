@@ -57,20 +57,31 @@
     <button onclick="completeMission()" id="missionBtn" style="background: #1a1a2e; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer;">تم الإنجاز! ✅</button>
     <div id="badges" style="margin-top: 10px; font-size: 20px;"></div>
     </div>
-    function redeemReward(cost, rewardName) {
-    let badges = parseInt(localStorage.getItem('badgeCount')) || 0;
+    
+<div id="reward-shop" style="background: #fff3cd; padding: 15px; border-radius: 10px; border: 2px dashed #ffc107; margin-top: 20px;">
+    <h4>🎁 متجر المكافآت (استبدل أوسمتك)</h4>
+    <p>أوسمتك الحالية: <span id="current-badges">0</span> ⭐</p>
+    <button onclick="redeemReward(5, 'ساعة لعب إضافية 🎮')" id="reward-btn">استبدال 5 أوسمة بـ (ساعة لعب)</button>
+</div>
+<div id="reward-shop" style="background: #fdf2f2; padding: 20px; border-radius: 15px; border: 2px solid #ff7b7b; margin-top: 20px; text-align: center;">
+    <h3 style="color: #d9534f;">🎁 متجر مكافآت شكران</h3>
+    <p style="font-size: 1.2em;">رصيدك الحالي: <span id="current-badges-display" style="font-weight: bold; color: #ffae00;">0</span> ⭐</p>
+    
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+        <button onclick="redeemReward(5, 'ساعة ألعاب إضافية 🎮')" style="padding: 10px; cursor: pointer; border-radius: 8px; border: none; background: #5bc0de; color: white;">
+            ساعة ألعاب (5 ⭐)
+        </button>
 
-    if (badges >= cost) {
-        badges -= cost; // خصم الأوسمة
-        localStorage.setItem('badgeCount', badges);
-        updateBadges(); // تحديث الشكل في الموقع
-        
-        alert("مبروك يا شكران! لقد استحقيت: " + rewardName + " بجدارة. استمتع! 🎉");
-    } else {
-        let missing = cost - badges;
-        alert("للأسف يا بطل، تحتاج إلى " + missing + " أوسمة إضافية لتفتح هذه المكافأة. استمر في العمل! 💪");
-    }
-}
+        <button onclick="redeemReward(15, 'وجبتك المفضلة 🍕')" style="padding: 10px; cursor: pointer; border-radius: 8px; border: none; background: #f0ad4e; color: white;">
+            وجبة لذيذة (15 ⭐)
+        </button>
+
+        <button onclick="redeemReward(20, 'يوم راحة كامل 🛌')" style="padding: 10px; cursor: pointer; border-radius: 8px; border: none; background: #5cb85c; color: white;">
+            يوم راحة (20 ⭐)
+        </button>
+    </div>
+</div>
+    
 
 <script>
 function addTask() {
@@ -257,6 +268,51 @@ window.onload = function() {
         alert("للأسف يا بطل، تحتاج إلى " + missing + " أوسمة إضافية لتفتح هذه المكافأة. استمر في العمل! 💪");
     }
     }
+    // --- كود متجر المكافآت الخاص بعلاء ---
+
+function redeemReward(cost, rewardName) {
+    // 1. جلب عدد الأوسمة الحالي من الذاكرة
+    let badges = parseInt(localStorage.getItem('badgeCount')) || 0;
+
+    // 2. التحقق من الرصيد
+    if (badges >= cost) {
+        // خصم الأوسمة
+        badges -= cost;
+        localStorage.setItem('badgeCount', badges);
+        
+        // 3. تحديث الأرقام في كل مكان بالموقع
+        updateAllBadgeDisplays();
+        
+        // 4. رسالة النجاح باسمك يا علاء
+        alert("كفو يا علاء! 🎉 استحقيت مكافأة: " + rewardName + ". استمتع بوقتك!");
+    } else {
+        // رسالة في حال عدم كفاية الأوسمة
+        let missing = cost - badges;
+        alert("يا علاء، شد حيلك! باقي لك " + missing + " أوسمة عشان تفتح المكافأة. 💪");
+    }
+}
+
+// دالة موحدة لتحديث كل العدادات في الموقع
+function updateAllBadgeDisplays() {
+    let currentBadges = localStorage.getItem('badgeCount') || 0;
+    
+    // تحديث العداد في المتجر
+    let shopDisplay = document.getElementById('current-badges-display');
+    if (shopDisplay) {
+        shopDisplay.innerText = currentBadges;
+    }
+    
+    // تحديث العداد العلوي (الذي كان موجوداً سابقاً)
+    let topDisplay = document.getElementById('badge-count'); // تأكد أن الـ ID مطابق لما في HTML
+    if (topDisplay) {
+        topDisplay.innerText = "أوسمتك: ⭐ " + currentBadges;
+    }
+}
+
+// تشغيل التحديث فور تحميل الصفحة
+window.addEventListener('load', function() {
+    updateAllBadgeDisplays();
+});
     
     
     
