@@ -81,6 +81,28 @@
         </button>
     </div>
 </div>
+    <div id="media-corner" style="background: #0f172a; color: white; padding: 20px; border-radius: 15px; margin-top: 20px; text-align: center;">
+    <h3 style="color: #f87171;">📺 ركن التحفيز (فيديو وموسيقى)</h3>
+    
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 15px;">
+        <iframe id="main-video" style="position: absolute; top:0; left: 0; width: 100%; height: 100%;" 
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
+
+    <div style="background: #1e293b; padding: 10px; border-radius: 10px;">
+        <p style="font-size: 0.9em; margin-bottom: 5px;">🎵 موسيقى التركيز</p>
+        <audio id="bg-music" controls style="width: 100%;">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            متصفحك لا يدعم مشغل الصوت.
+        </audio>
+    </div>
+
+    <div style="margin-top: 15px;">
+        <input type="text" id="video-url" placeholder="ضع رابط يوتيوب هنا..." style="padding: 8px; border-radius: 5px; border: none; width: 70%;">
+        <button onclick="changeVideo()" style="padding: 8px 15px; background: #ef4444; border: none; color: white; border-radius: 5px; cursor: pointer;">تحديث الفيديو</button>
+    </div>
+    </div>
     
 
 <script>
@@ -314,6 +336,17 @@ window.addEventListener('load', function() {
     updateAllBadgeDisplays();
 });
     
+    function changeVideo() {
+    let url = document.getElementById('video-url').value;
+    if (url.includes("youtube.com/watch?v=")) {
+        // تحويل رابط اليوتيوب العادي إلى رابط صالح للمشغل (Embed)
+        let videoID = url.split("v=")[1].split("&")[0];
+        document.getElementById('main-video').src = "https://www.youtube.com/embed/" + videoID;
+        alert("تم تحديث الفيديو بنجاح يا علاء! مشاهدة ممتعة.");
+    } else {
+        alert("يا علاء، يرجى وضع رابط يوتيوب صحيح.");
+    }
+    }
     
     
 </script>
