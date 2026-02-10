@@ -1,44 +1,44 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي الاحترافي</title>
+    <title>موقعي الاحترافي - SKIPA</title>
     <style>
-        body { background: #1a1a2e; color: white; font-family: sans-serif; text-align: center; }
-        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 3px solid #ffb703; margin-top: 20px; object-fit: cover; }
-        .notepad { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; margin: 20px auto; }
-        #clock { color: #ffb703; font-size: 24px; font-weight: bold; margin-top: 20px; }
-        input { padding: 10px; border-radius: 5px; border: none; width: 60%; }
-        button { padding: 10px; background: orange; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .task-item { background: rgba(255, 255, 255, 0.2); margin: 10px 0; padding: 10px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
+        body { background: #1a1a2e; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #ffb703; object-fit: cover; }
+        .notepad { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; max-width: 400px; margin: 20px auto; }
+        #clock { color: #ffb703; font-size: 2.5rem; margin-top: 20px; font-weight: bold; }
+        input { padding: 10px; border-radius: 5px; border: none; width: 80%; margin-bottom: 10px; }
+        button { padding: 10px 20px; background: #ffb703; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-link { text-decoration: none; color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px; margin: 5px; display: inline-block; }
     </style>
-    
 </head>
 <body>
-    <img src="me.jpg" onerror="this.src='https://github.com/skipakink-sudo.png'" class="profile-img">
-    <h2 style="color: #ffb703; margin-bottom: 20px;">AS.skipa</h2>
-    
+
+    <img src="me.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/140'">
+    <h2 style="color: #ffb703; margin-bottom: 10px;">AS.skipa</h2>
     <h1>مرحباً بك في موقعي 🚀</h1>
 
     <div class="notepad">
         <h3>📝 مفكرتي الدائمة (لا تُحذف)</h3>
-        <p id="taskCount" style="color: #ccc; font-size: 14px;">لديك 0 مهام حالياً</p>
+        <p id="taskCount" style="color: #ccc;">لديك 0 مهام حالياً</p>
         
-        <input type="text" id="taskInput" placeholder="اكتب شيئاً هنا...">
-        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-    <a href="https://www.google.com" target="_blank" style="text-decoration: none; background: #4285F4; color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">Google</a>
-    <a href="https://github.com" target="_blank" style="text-decoration: none; background: #333; color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">GitHub</a>
-    <a href="https://www.youtube.com" target="_blank" style="text-decoration: none; background: #FF0000; color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">YouTube</a>
-</div>
-
+        <input type="text" id="taskInput" placeholder="اكتب ملاحظة هنا...">
         <button onclick="addTask()">إضافة وحفظ</button>
-        <div id="taskList"></div>
+
+        <div style="margin-top: 20px;">
+            <a href="https://www.youtube.com" target="_blank" class="btn-link" style="background: #FF0000;">YouTube</a>
+            <a href="https://github.com" target="_blank" class="btn-link" style="background: #333;">GitHub</a>
+            <a href="https://www.google.com" target="_blank" class="btn-link" style="background: #4285F4;">Google</a>
+        </div>
+
+        <div id="taskList" style="margin-top: 20px; text-align: right;"></div>
     </div>
 
     <div id="clock">00:00:00</div>
 
-    <script>
+<script>
 function addTask() {
     const input = document.getElementById('taskInput');
     if (input.value.trim() === "") return;
@@ -54,15 +54,12 @@ function display() {
     const taskList = document.getElementById('taskList');
     const countLabel = document.getElementById('taskCount');
     
-    // عرض المهام
     taskList.innerHTML = tasks.map((task, i) => 
-        `<div class="task-item">
+        `<div style="background:rgba(255,255,255,0.1); margin:5px 0; padding:10px; border-radius:5px; display:flex; justify-content:space-between;">
             <span>${task}</span>
-            <button onclick="del(${i})" style="background:red; color:white; border:none; border-radius:5px; cursor:pointer;">X</button>
+            <button onclick="del(${i})" style="background:red; color:white; padding:2px 8px;">X</button>
         </div>`
     ).join('');
-
-    // تحديث العداد
     countLabel.textContent = `لديك ${tasks.length} مهام حالياً`;
 }
 
@@ -73,21 +70,23 @@ function del(i) {
     display();
 }
 
-// كود الساعة الرقمية
 function updateClock() {
     const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = `${h}:${m}:${s}`;
 }
 
 window.onload = function() {
-    display();
-    setInterval(updateClock, 1000);
     updateClock();
+    setInterval(updateClock, 1000);
+    display();
+    
+    const hour = new Date().getHours();
+    const welcomeMsg = hour < 12 ? "صباح الخير يا علاء ☀️" : "طاب يومك يا SKIPA 🚀";
+    document.querySelector('h1').textContent = welcomeMsg;
 };
-const hour = new Date().getHours();
-const welcomeMsg = hour < 12 ? "صباح الخير يا علاء ☀️" : "طاب يومك يا SKIPA 🚀";
-document.querySelector('h1').textContent = welcomeMsg;
-        
+</script>
+</body>
+</html>
