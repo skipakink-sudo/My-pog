@@ -37,6 +37,14 @@
     </div>
 
     <div id="clock">00:00:00</div>
+<div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+    <p>🚀 وضع المذاكرة والتركيز</p>
+    <button onclick="toggleFocus()" id="focusBtn" style="background: #2a9d8f; margin-bottom: 10px;">تشغيل وضع الهدوء 🌿</button>
+    <div id="musicPlayer" style="display: none; margin-top: 15px;">
+        <iframe id="ytPlayer" width="0" height="0" src="https://www.youtube.com/embed/jfKfPfyJRdk?enablejsapi=1" frameborder="0"></iframe>
+        <p style="font-size: 12px; color: #aaa;">صوت المطر يعمل الآن.. ركز يا بطل!</p>
+    </div>
+</div>
 
 <script>
 function addTask() {
@@ -84,9 +92,59 @@ window.onload = function() {
     display();
     
     const hour = new Date().getHours();
+    let isFocus = false;
+function toggleFocus() {
+    isFocus = !isFocus;
+    const body = document.body;
+    const btn = document.getElementById('focusBtn');
+    const player = document.getElementById('musicPlayer');
+    const yt = document.getElementById('ytPlayer');
+
+    if (isFocus) {
+        body.style.transition = "1.5s";
+        body.style.background = "#023047"; // لون هادئ جداً
+        btn.textContent = "إيقاف وضع الهدوء ❌";
+        btn.style.background = "#e76f51";
+        player.style.display = "block";
+        yt.src += "&autoplay=1"; // تشغيل الموسيقى تلقائياً
+    } else {
+        body.style.background = "#1a1a2e"; // العودة للون الأصلي
+        btn.textContent = "تشغيل وضع الهدوء 🌿";
+        btn.style.background = "#2a9d8f";
+        player.style.display = "none";
+        yt.src = yt.src.replace("&autoplay=1", ""); // إيقاف الموسيقى
+    }
+}
+
     const welcomeMsg = hour < 12 ? "صباح الخير يا علاء ☀️" : "طاب يومك يا SKIPA 🚀";
     document.querySelector('h1').textContent = welcomeMsg;
 };
+    let isFocus = false;
+function toggleFocus() {
+    isFocus = !isFocus;
+    const body = document.body;
+    const btn = document.getElementById('focusBtn');
+    const player = document.getElementById('musicPlayer');
+    const yt = document.getElementById('ytPlayer');
+
+    if (isFocus) {
+        body.style.transition = "2s";
+        body.style.background = "#023047"; // لون ليلي مريح
+        btn.textContent = "إيقاف وضع الهدوء ❌";
+        btn.style.background = "#e76f51";
+        player.style.display = "block";
+        // تشغيل الموسيقى
+        yt.src += "&autoplay=1";
+    } else {
+        body.style.background = "#1a1a2e"; // العودة للون الأصلي
+        btn.textContent = "تشغيل وضع الهدوء 🌿";
+        btn.style.background = "#2a9d8f";
+        player.style.display = "none";
+        // إيقاف الموسيقى
+        yt.src = yt.src.replace("&autoplay=1", "");
+    }
+                             }
+    
 </script>
 </body>
 </html>
